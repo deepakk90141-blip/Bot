@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Chatbot</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'chatbot/css/style.css' %}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    
+  <div class="theme-wrapper" id="themeWrapper">
+    <nav class="navbar">
+    <div class="navbar-logo"><img src="{% static 'image/logo.png' %}" alt="" width="20px"> Conversio</div>
+    <ul class="navbar-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Docs</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+</nav>
+
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="bot-icon"></div>
+                <div>Chatbot</div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message" id="initialMessage">
+                    Hello! I'm your Chatbot. How can I help you today?
+                </div>
+                <div class="typing-indicator" id="typingIndicator">Bot is Thinking...</div>
+            </div>
+            <div class="chat-input">
+                <form id="chatForm">
+                {% csrf_token %}
+                   <input type="text" name="user_message" id="userMessage" placeholder="Type your message here..." required>
+                   <button type="submit" class="btn-56">Send</button>
+                </form>
+
+            </div>
+        </div>
+        <div class="chat-history">
+            <h2>Recent Conversations</h2>
+            {% if chat_history %}
+                {% for chat in chat_history %}
+                <div class="history-item">
+                    <div class="history-user">You: {{ chat.user_message }}</div>
+                    <div class="history-bot">Bot: {{ chat.bot_response }}</div>
+                    <div class="history-timestamp">{{ chat.timestamp|date:"g:i a" }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No recent conversations.</p>
+            {% endif %}
+        </div>
+    </div>
+    <footer class="chatbot-footer">
+    <div class="footer-content">
+        <p>© 2025 Conversio Inc. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+  </div>
+  <button id="darkModeToggle" class="dark-toggle">🌙</button>
+
+  <script src="{% static 'chatbot/js/darkmode.js' %}"></script>
+
+</body>
+
+    
+    
+</footer>
+
+    <script src="{% static 'chatbot/js/chat.js' %}"></script>
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+</body>
+</html>
+
